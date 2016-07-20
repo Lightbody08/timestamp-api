@@ -4,7 +4,7 @@ var moment = require("moment");
 
 app.get('/', function (req, res) {
   //Home Page set up.
-  res.sendfile('index.html', {root:__dirname});
+  res.sendFile('index.html', {root:__dirname});
   //res.send('Hello World!');
 });
 
