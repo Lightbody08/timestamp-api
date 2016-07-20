@@ -4,15 +4,11 @@ var moment = require("moment");
 
 app.get('/', function (req, res) {
   //Home Page set up.
-  //res.sendFile <---- HINT
-  res.send('Hello World!');
+  res.sendfile('index.html', {root:__dirname});
+  //res.send('Hello World!');
 });
 
 app.get('/:date', function (req, res) {
-  //Check if date is a valid date.
-  //Convert natural to unix
-  //or convert unix to natural.
-  //Send the result.
   var givenDate = req.params.date;
   var currDate = "";
   var timestampObj = {
@@ -20,12 +16,18 @@ app.get('/:date', function (req, res) {
       natural: null
   }
   
+  //If paramater is a valid Unix date,
+  //use moment set it to current date.
+  //Else it should be anatural date,
+  //set it using a particular moment format.
   if (moment.unix(givenDate).isValid()) {
    currDate = moment.unix(givenDate);
   } else {
    currDate = moment(givenDate, 'MMMM DD, YYYY');
   }
   
+  //If this is an actual date,
+  //assign the timestamp object the appropriate variables.
   if (currDate.isValid()) {
       timestampObj.natural = currDate.format("MMMM DD, YYYY");
       timestampObj.unix = currDate.format('X');
